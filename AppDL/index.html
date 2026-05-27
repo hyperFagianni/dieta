@@ -7,95 +7,172 @@
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1a237e">
+  <meta name="theme-color" content="#0f172a">
 
   <!-- iOS "Aggiungi a Home" -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="La mia Dieta">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --col-colazione: #F57C00;
-      --col-spuntino:  #388E3C;
-      --col-pranzo:    #1565C0;
-      --col-merenda:   #6A1B9A;
-      --col-cena:      #B71C1C;
-      --bg: #ECEFF1;
-      --card: #ffffff;
-      --border: #e0e0e0;
-      --radius: 14px;
+      --navy:   #0f172a;
+      --navy-2: #1e293b;
+      --navy-3: #334155;
+      --accent: #1d4ed8;
+      --accent-light: #eff6ff;
+      --accent-mid:   #bfdbfe;
+      --bg:     #f8fafc;
+      --card:   #ffffff;
+      --border: #e2e8f0;
+      --text:   #0f172a;
+      --text-muted: #64748b;
+      --radius-lg: 18px;
+      --radius:    12px;
+      --radius-sm: 7px;
+      --shadow:      0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+      --shadow-hover: 0 2px 6px rgba(0,0,0,.06), 0 10px 24px rgba(0,0,0,.08);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background: var(--bg);
-      color: #212121;
-      padding: 16px;
-      max-width: 800px;
-      margin: 0 auto;
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ── HEADER ── */
     header {
-      background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+      background: var(--navy);
       color: #fff;
-      border-radius: var(--radius);
-      padding: 24px 20px;
+      padding: 44px 24px 32px;
       text-align: center;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.18);
+      position: relative;
+      overflow: hidden;
     }
-    header h1 { font-size: 1.7rem; letter-spacing: -0.5px; }
-    header p  { margin-top: 6px; opacity: .8; font-size: .9rem; }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(29,78,216,.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    header h1 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -.5px;
+      position: relative;
+    }
+    header p {
+      margin-top: 8px;
+      opacity: .5;
+      font-size: .8rem;
+      font-weight: 400;
+      letter-spacing: .3px;
+      position: relative;
+    }
 
-    /* ── NAV ── */
+    /* ── STICKY NAV ── */
     nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(248,250,252,.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
-      justify-content: center;
-      margin-bottom: 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+    nav::-webkit-scrollbar { display: none; }
     nav a {
-      padding: 7px 16px;
-      border-radius: 20px;
+      padding: 8px 18px;
+      border-radius: 50px;
       text-decoration: none;
       color: #fff;
-      font-size: .82rem;
-      font-weight: 700;
-      letter-spacing: .3px;
-      transition: opacity .15s, transform .1s;
+      background: var(--navy-2) !important;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background .2s, transform .15s;
     }
-    nav a:hover { opacity: .85; transform: translateY(-1px); }
+    nav a:hover  { background: var(--navy-3) !important; transform: translateY(-1px); }
+    nav a:active { transform: translateY(0); }
+
+    /* ── MAIN WRAPPER ── */
+    main {
+      padding: 24px 16px 48px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
 
     /* ── MEAL CARD ── */
     .meal-card {
       background: var(--card);
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: box-shadow .25s ease, transform .2s ease;
     }
+    .meal-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-1px);
+    }
+
     .meal-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 16px 20px;
+      gap: 14px;
+      padding: 20px 22px;
       color: #fff;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
     }
-    .meal-icon { font-size: 2rem; line-height: 1; }
-    .meal-title { font-size: 1.25rem; font-weight: 700; }
+    .meal-header::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 40%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.03));
+      pointer-events: none;
+    }
+    .meal-icon {
+      font-size: 1.75rem;
+      line-height: 1;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
+    }
+    .meal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -.2px;
+    }
 
     /* ── PLATE LABEL ── */
     .plate-label {
-      padding: 8px 20px;
-      background: #f0f2f5;
-      font-size: .72rem;
-      font-weight: 700;
+      padding: 9px 22px;
+      background: #f8fafc;
+      font-size: .67rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #757575;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
       border-top: 1px solid var(--border);
     }
 
@@ -105,105 +182,100 @@
     .food-row {
       display: flex;
       align-items: center;
-      padding: 13px 20px;
-      gap: 10px;
+      padding: 14px 22px;
+      gap: 12px;
     }
     .food-row.clickable { cursor: pointer; transition: background .15s; }
-    .food-row.clickable:hover { background: #fafafa; }
+    .food-row.clickable:hover  { background: #f8fafc; }
+    .food-row.clickable:active { background: #f1f5f9; }
 
     .food-qty {
-      display: inline-block;
-      background: #eee;
-      color: #444;
-      font-size: .78rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
       white-space: nowrap;
       flex-shrink: 0;
+      letter-spacing: .1px;
+      background: var(--accent-light);
+      color: var(--accent);
     }
-    .food-name { flex: 1; font-size: .95rem; }
+    .food-name {
+      flex: 1;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.45;
+    }
 
     .badge {
-      font-size: .7rem;
-      font-weight: 700;
-      color: #fff;
-      padding: 2px 9px;
-      border-radius: 10px;
+      font-size: .64rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid var(--accent-mid);
+      padding: 3px 10px;
+      border-radius: 50px;
       white-space: nowrap;
       flex-shrink: 0;
+      letter-spacing: .2px;
     }
     .chevron {
-      font-size: .75rem;
-      color: #bbb;
+      font-size: .68rem;
+      color: #cbd5e1;
       flex-shrink: 0;
-      transition: transform .2s;
+      transition: transform .25s cubic-bezier(.4,0,.2,1), color .2s;
     }
-    .food-item.open .chevron { transform: rotate(180deg); }
+    .food-item.open .chevron { transform: rotate(180deg); color: #94a3b8; }
 
-    /* ── ALTERNATIVES PANEL ── */
+    /* ── ALT PANEL ── */
     .alt-panel {
       display: none;
-      background: #fafafa;
-      border-top: 1px dashed #ddd;
-      padding: 10px 20px 14px 28px;
+      background: #f8fafc;
+      border-top: 1px dashed #e2e8f0;
+      padding: 12px 22px 16px 36px;
     }
     .food-item.open .alt-panel { display: block; }
 
     .alt-panel h4 {
-      font-size: .7rem;
+      font-size: .64rem;
       text-transform: uppercase;
-      letter-spacing: .8px;
-      color: #9e9e9e;
-      margin-bottom: 8px;
+      letter-spacing: 1.2px;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
     .alt-list { list-style: none; }
     .alt-list li {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 0;
-      font-size: .88rem;
-      color: #424242;
-      border-bottom: 1px solid #f0f0f0;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: .82rem;
+      color: #374151;
+      font-weight: 400;
+      border-bottom: 1px solid #f1f5f9;
     }
     .alt-list li:last-child { border-bottom: none; }
+    /* ── DOT ── */
     .dot {
-      width: 7px; height: 7px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       flex-shrink: 0;
+      background: var(--accent);
+      opacity: .6;
     }
 
-    /* ── PER-MEAL COLORS ── */
-    .colazione .meal-header { background: linear-gradient(135deg, #FF9800, #E65100); }
-    .colazione .badge        { background: #F57C00; }
-    .colazione .dot          { background: #F57C00; }
-    .colazione .food-qty     { background: #FFF3E0; color: #E65100; }
-
-    .spuntino .meal-header   { background: linear-gradient(135deg, #4CAF50, #1B5E20); }
-    .spuntino .badge         { background: #388E3C; }
-    .spuntino .dot           { background: #388E3C; }
-    .spuntino .food-qty      { background: #E8F5E9; color: #2E7D32; }
-
-    .pranzo .meal-header     { background: linear-gradient(135deg, #2196F3, #0D47A1); }
-    .pranzo .badge           { background: #1565C0; }
-    .pranzo .dot             { background: #1565C0; }
-    .pranzo .food-qty        { background: #E3F2FD; color: #1565C0; }
-
-    .merenda .meal-header    { background: linear-gradient(135deg, #AB47BC, #4A148C); }
-    .merenda .badge          { background: #6A1B9A; }
-    .merenda .dot            { background: #6A1B9A; }
-    .merenda .food-qty       { background: #F3E5F5; color: #6A1B9A; }
-
-    .cena .meal-header       { background: linear-gradient(135deg, #EF5350, #7F0000); }
-    .cena .badge             { background: #B71C1C; }
-    .cena .dot               { background: #B71C1C; }
-    .cena .food-qty          { background: #FFEBEE; color: #B71C1C; }
-
     @media (max-width: 480px) {
-      header h1 { font-size: 1.3rem; }
-      .food-row { padding: 11px 14px; gap: 8px; }
-      .meal-header { padding: 14px 16px; }
+      header { padding: 32px 18px 24px; }
+      header h1 { font-size: 1.25rem; }
+      .food-row { padding: 12px 16px; gap: 10px; }
+      .meal-header { padding: 16px 18px; }
+      .plate-label { padding: 8px 16px; }
+      .alt-panel { padding: 10px 16px 14px 26px; }
+      main { padding: 18px 12px 36px; }
     }
   </style>
 </head>
@@ -215,14 +287,14 @@
 </header>
 
 <nav>
-  <a href="#colazione" style="background:#F57C00">☀️ Colazione</a>
-  <a href="#spuntino"  style="background:#388E3C">🍎 Spuntino</a>
-  <a href="#pranzo"    style="background:#1565C0">🍝 Pranzo</a>
-  <a href="#merenda"   style="background:#6A1B9A">⚡ Merenda Pre-WO</a>
-  <a href="#cena"      style="background:#B71C1C">🌙 Cena</a>
+  <a href="#colazione">☀️ Colazione</a>
+  <a href="#spuntino">🍎 Spuntino</a>
+  <a href="#pranzo">🍝 Pranzo</a>
+  <a href="#merenda">⚡ Merenda</a>
+  <a href="#cena">🌙 Cena</a>
 </nav>
 
-<div id="app"></div>
+<main><div id="app"></div></main>
 
 <script>
 const DIET = [
