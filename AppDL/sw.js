@@ -1,7 +1,8 @@
-const CACHE = 'dieta-v3';
+const CACHE = 'dieta-v5';
 const ASSETS = [
   './',
   './index.html',
+  './style.css',
   './manifest.json',
   './icons/icon.svg',
   './icons/icon-maskable.svg'

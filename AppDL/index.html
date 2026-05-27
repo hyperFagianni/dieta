@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -16,276 +16,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --navy:   #0f172a;
-      --navy-2: #1e293b;
-      --navy-3: #334155;
-      --accent: #1d4ed8;
-      --accent-light: #eff6ff;
-      --accent-mid:   #bfdbfe;
-      --bg:     #f8fafc;
-      --card:   #ffffff;
-      --border: #e2e8f0;
-      --text:   #0f172a;
-      --text-muted: #64748b;
-      --radius-lg: 18px;
-      --radius:    12px;
-      --radius-sm: 7px;
-      --shadow:      0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
-      --shadow-hover: 0 2px 6px rgba(0,0,0,.06), 0 10px 24px rgba(0,0,0,.08);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: var(--navy);
-      color: #fff;
-      padding: 44px 24px 32px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 60% 0%, rgba(29,78,216,.35) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    header h1 {
-      font-size: 1.45rem;
-      font-weight: 700;
-      letter-spacing: -.5px;
-      position: relative;
-    }
-    header p {
-      margin-top: 8px;
-      opacity: .5;
-      font-size: .8rem;
-      font-weight: 400;
-      letter-spacing: .3px;
-      position: relative;
-    }
-
-    /* ── STICKY NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(248,250,252,.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 16px;
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    nav::-webkit-scrollbar { display: none; }
-    nav a {
-      padding: 8px 18px;
-      border-radius: 50px;
-      text-decoration: none;
-      color: #fff;
-      background: var(--navy-2) !important;
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .2px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      transition: background .2s, transform .15s;
-    }
-    nav a:hover  { background: var(--navy-3) !important; transform: translateY(-1px); }
-    nav a:active { transform: translateY(0); }
-
-    /* ── MAIN WRAPPER ── */
-    main {
-      padding: 24px 16px 48px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    /* ── MEAL CARD ── */
-    .meal-card {
-      background: var(--card);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: box-shadow .25s ease, transform .2s ease;
-    }
-    .meal-card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-1px);
-    }
-
-    .meal-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 20px 22px;
-      color: #fff;
-      background: var(--navy);
-      position: relative;
-      overflow: hidden;
-    }
-    .meal-header::after {
-      content: '';
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 40%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.03));
-      pointer-events: none;
-    }
-    .meal-icon {
-      font-size: 1.75rem;
-      line-height: 1;
-      flex-shrink: 0;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.25));
-    }
-    .meal-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -.2px;
-    }
-
-    /* ── PLATE LABEL ── */
-    .plate-label {
-      padding: 9px 22px;
-      background: #f8fafc;
-      font-size: .67rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    /* ── FOOD ROW ── */
-    .food-item { border-top: 1px solid var(--border); }
-
-    .food-row {
-      display: flex;
-      align-items: center;
-      padding: 14px 22px;
-      gap: 12px;
-    }
-    .food-row.clickable { cursor: pointer; transition: background .15s; }
-    .food-row.clickable:hover  { background: #f8fafc; }
-    .food-row.clickable:active { background: #f1f5f9; }
-
-    .food-qty {
-      display: inline-flex;
-      align-items: center;
-      font-size: .7rem;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: var(--radius-sm);
-      white-space: nowrap;
-      flex-shrink: 0;
-      letter-spacing: .1px;
-      background: var(--accent-light);
-      color: var(--accent);
-    }
-    .food-name {
-      flex: 1;
-      font-size: .88rem;
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.45;
-    }
-
-    .badge {
-      font-size: .64rem;
-      font-weight: 600;
-      color: var(--accent);
-      background: var(--accent-light);
-      border: 1px solid var(--accent-mid);
-      padding: 3px 10px;
-      border-radius: 50px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      letter-spacing: .2px;
-    }
-    .chevron {
-      font-size: .68rem;
-      color: #cbd5e1;
-      flex-shrink: 0;
-      transition: transform .25s cubic-bezier(.4,0,.2,1), color .2s;
-    }
-    .food-item.open .chevron { transform: rotate(180deg); color: #94a3b8; }
-
-    /* ── ALT PANEL ── */
-    .alt-panel {
-      display: none;
-      background: #f8fafc;
-      border-top: 1px dashed #e2e8f0;
-      padding: 12px 22px 16px 36px;
-    }
-    .food-item.open .alt-panel { display: block; }
-
-    .alt-panel h4 {
-      font-size: .64rem;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #94a3b8;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    .alt-list { list-style: none; }
-    .alt-list li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      font-size: .82rem;
-      color: #374151;
-      font-weight: 400;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .alt-list li:last-child { border-bottom: none; }
-    /* ── DOT ── */
-    .dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      background: var(--accent);
-      opacity: .6;
-    }
-
-    @media (max-width: 480px) {
-      header { padding: 32px 18px 24px; }
-      header h1 { font-size: 1.25rem; }
-      .food-row { padding: 12px 16px; gap: 10px; }
-      .meal-header { padding: 16px 18px; }
-      .plate-label { padding: 8px 16px; }
-      .alt-panel { padding: 10px 16px 14px 26px; }
-      main { padding: 18px 12px 36px; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<div id="page-diet" class="page active">
 <header>
   <h1>🥗 Scheda Alimentare</h1>
   <p>Mattia Nicolini &nbsp;·&nbsp; 28/05/2026 – 22/07/2026 &nbsp;·&nbsp; 8 settimane</p>
 </header>
-
 <nav>
   <a href="#colazione">☀️ Colazione</a>
   <a href="#spuntino">🍎 Spuntino</a>
@@ -293,8 +32,61 @@
   <a href="#merenda">⚡ Merenda</a>
   <a href="#cena">🌙 Cena</a>
 </nav>
-
 <main><div id="app"></div></main>
+</div>
+
+<div id="page-recipes" class="page">
+<header>
+  <h1>🍽️ Le mie Ricette</h1>
+  <p>Crea ricette con gli ingredienti della tua dieta</p>
+</header>
+<main class="recipes-main">
+  <button class="btn-new-recipe" onclick="openRecipeModal()">
+    <span style="font-size:1.3rem;line-height:1;font-weight:300">+</span> Nuova ricetta
+  </button>
+  <div id="recipes-list"></div>
+</main>
+</div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tab-diet" onclick="switchTab('diet')">
+    <span class="tab-icon">📋</span>
+    <span>Dieta</span>
+  </button>
+  <button class="tab-btn" id="tab-recipes" onclick="switchTab('recipes')">
+    <span class="tab-icon">🍽️</span>
+    <span>Ricette</span>
+  </button>
+</div>
+
+<!-- Modal: crea / modifica ricetta -->
+<div id="recipe-modal" class="modal-overlay" onclick="handleOverlayClick(event,'recipe-modal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Nuova ricetta</span>
+      <button class="modal-close" onclick="closeModal('recipe-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn-primary" onclick="saveRecipe()">Salva ricetta</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: dettaglio ricetta -->
+<div id="detail-modal" class="modal-overlay" onclick="handleOverlayClick(event,'detail-modal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="detail-title"></span>
+      <button class="modal-close" onclick="closeModal('detail-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
+    <div class="modal-footer" id="detail-footer"></div>
+  </div>
+</div>
 
 <script>
 const DIET = [
@@ -665,6 +457,199 @@ if ('serviceWorker' in navigator) {
   link.href = canvas.toDataURL('image/png');
   document.head.appendChild(link);
 }());
+
+/* ══════════════════════════════════════
+   TABS
+══════════════════════════════════════ */
+function switchTab(tab) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  window.scrollTo(0, 0);
+  if (tab === 'recipes') renderRecipes();
+}
+
+/* ══════════════════════════════════════
+   RICETTE – STORAGE
+══════════════════════════════════════ */
+function loadRecipes() {
+  try { return JSON.parse(localStorage.getItem('dieta-recipes') || '[]'); }
+  catch(e) { return []; }
+}
+function persistRecipes(arr) {
+  localStorage.setItem('dieta-recipes', JSON.stringify(arr));
+}
+
+/* ══════════════════════════════════════
+   INGREDIENTI DAL PIANO ALIMENTARE
+══════════════════════════════════════ */
+function getIngredientGroups() {
+  return DIET.map(meal => {
+    const seen = new Set();
+    const items = [];
+    for (const plate of meal.plates) {
+      for (const food of plate.foods) {
+        if (!seen.has(food.item)) {
+          seen.add(food.item);
+          items.push({ qty: food.qty, name: food.item });
+        }
+        for (const alt of food.alts) {
+          const m = alt.match(/^(.+?)\s*·\s*(.+)$/);
+          if (m) {
+            const name = m[2].trim();
+            if (!seen.has(name)) { seen.add(name); items.push({ qty: m[1].trim(), name }); }
+          }
+        }
+      }
+    }
+    return { meal: meal.meal, icon: meal.icon, items };
+  });
+}
+
+/* ══════════════════════════════════════
+   MODAL HELPERS
+══════════════════════════════════════ */
+let _editingId = null;
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function handleOverlayClick(e, id) {
+  if (e.target === e.currentTarget) closeModal(id);
+}
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ══════════════════════════════════════
+   APRI MODAL CREA / MODIFICA
+══════════════════════════════════════ */
+function openRecipeModal(recipeId) {
+  _editingId = recipeId || null;
+  const recipe = recipeId ? loadRecipes().find(r => r.id === recipeId) : null;
+  const selMap = {};
+  if (recipe) recipe.ingredients.forEach(i => { selMap[i.name] = i.qty; });
+
+  document.getElementById('modal-title').textContent = recipe ? 'Modifica ricetta' : 'Nuova ricetta';
+
+  const groups = getIngredientGroups();
+  let html = `
+    <div class="form-field">
+      <label class="form-label">Nome ricetta</label>
+      <input class="form-input" id="recipe-name" type="text" placeholder="Es. Pasta al tonno leggera" value="${recipe ? escHtml(recipe.name) : ''}">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Seleziona ingredienti</label>`;
+
+  for (const g of groups) {
+    html += `<div class="ingredient-group">
+      <div class="ingredient-group-label">${g.icon} ${g.meal}</div>`;
+    for (const ing of g.items) {
+      const sel = ing.name in selMap;
+      const qty = sel ? selMap[ing.name] : ing.qty;
+      html += `
+        <div class="ingredient-item${sel ? ' selected' : ''}" onclick="toggleIng(this)">
+          <div class="ingredient-check"></div>
+          <div class="ingredient-info">
+            <div class="ingredient-name">${escHtml(ing.name)}</div>
+            <div class="ingredient-default-qty">${escHtml(ing.qty)}</div>
+          </div>
+          <input class="ingredient-qty-input" type="text" value="${escHtml(qty)}" data-default="${escHtml(ing.qty)}" onclick="event.stopPropagation()">
+        </div>`;
+    }
+    html += `</div>`;
+  }
+  html += `</div>`;
+
+  document.getElementById('modal-body').innerHTML = html;
+  openModal('recipe-modal');
+  if (!recipe) setTimeout(() => document.getElementById('recipe-name').focus(), 320);
+}
+
+function toggleIng(el) { el.classList.toggle('selected'); }
+
+/* ══════════════════════════════════════
+   SALVA RICETTA
+══════════════════════════════════════ */
+function saveRecipe() {
+  const nameEl = document.getElementById('recipe-name');
+  const name = nameEl.value.trim();
+  if (!name) { nameEl.focus(); nameEl.style.borderColor = '#ef4444'; return; }
+
+  const ingredients = [...document.querySelectorAll('#modal-body .ingredient-item.selected')].map(el => ({
+    name: el.querySelector('.ingredient-name').textContent,
+    qty:  el.querySelector('.ingredient-qty-input').value.trim() || el.querySelector('.ingredient-qty-input').dataset.default
+  }));
+  if (!ingredients.length) { alert('Seleziona almeno un ingrediente.'); return; }
+
+  const recipes = loadRecipes();
+  if (_editingId) {
+    const idx = recipes.findIndex(r => r.id === _editingId);
+    if (idx !== -1) recipes[idx] = { ...recipes[idx], name, ingredients };
+  } else {
+    recipes.push({ id: Date.now().toString(), name, ingredients });
+  }
+  persistRecipes(recipes);
+  closeModal('recipe-modal');
+  renderRecipes();
+}
+
+/* ══════════════════════════════════════
+   RENDER LISTA RICETTE
+══════════════════════════════════════ */
+function renderRecipes() {
+  const el = document.getElementById('recipes-list');
+  if (!el) return;
+  const recipes = loadRecipes();
+  if (!recipes.length) {
+    el.innerHTML = `<div class="recipe-empty">
+      <div class="empty-icon">🍳</div>
+      <p>Nessuna ricetta ancora.<br>Premi il pulsante per crearne una.</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = recipes.map(r => `
+    <div class="recipe-card" onclick="openRecipeDetail('${r.id}')">
+      <div class="recipe-card-icon">🍽️</div>
+      <div class="recipe-card-info">
+        <div class="recipe-card-name">${escHtml(r.name)}</div>
+        <div class="recipe-card-count">${r.ingredients.length} ingredient${r.ingredients.length === 1 ? 'e' : 'i'}</div>
+      </div>
+      <div class="recipe-card-arrow">›</div>
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════
+   DETTAGLIO RICETTA
+══════════════════════════════════════ */
+function openRecipeDetail(id) {
+  const recipe = loadRecipes().find(r => r.id === id);
+  if (!recipe) return;
+  document.getElementById('detail-title').textContent = recipe.name;
+  document.getElementById('detail-body').innerHTML =
+    recipe.ingredients.map(i => `
+      <div class="detail-ingredient">
+        <span class="detail-qty">${escHtml(i.qty)}</span>
+        <span class="detail-name">${escHtml(i.name)}</span>
+      </div>`).join('');
+  document.getElementById('detail-footer').innerHTML = `
+    <button class="btn-secondary" onclick="closeModal('detail-modal');openRecipeModal('${id}')">Modifica ricetta</button>
+    <button class="btn-danger" onclick="deleteRecipe('${id}')">Elimina ricetta</button>`;
+  openModal('detail-modal');
+}
+
+function deleteRecipe(id) {
+  if (!confirm('Eliminare questa ricetta?')) return;
+  persistRecipes(loadRecipes().filter(r => r.id !== id));
+  closeModal('detail-modal');
+  renderRecipes();
+}
 </script>
 </body>
 </html>
