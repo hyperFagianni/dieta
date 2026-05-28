@@ -1,4 +1,4 @@
-const CACHE = 'dieta-v9';
+const CACHE = 'dieta-v10';
 const ASSETS = [
   './',
   './index.html',
