@@ -516,6 +516,10 @@
     }
     .ingredient-item.selected .ingredient-qty-input { display: block; }
     .ingredient-qty-input:focus { border-color: var(--accent); }
+    .ingredient-item.blocked {
+      opacity: .32;
+      pointer-events: none;
+    }
 
     /* ── ACTION BUTTONS ── */
     .btn-primary {

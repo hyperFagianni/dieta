@@ -377,6 +377,7 @@ function switchTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
   window.scrollTo(0, 0);
   if (tab === 'recipes') renderRecipes();
+  if (tab === 'days') renderDays();
 }
 
 /* ══════════════════════════════════════
@@ -395,24 +396,29 @@ function persistRecipes(arr) {
 ══════════════════════════════════════ */
 function getIngredientGroups() {
   return DIET.map(meal => {
+    const slots = getMealSlots(meal.id);
+    const slotKeyMap = {};
+    for (const slot of slots) {
+      for (const item of slot.items) slotKeyMap[item.name] = slot.key;
+    }
     const seen = new Set();
     const items = [];
     for (const plate of meal.plates) {
       for (const food of plate.foods) {
         if (!seen.has(food.item)) {
           seen.add(food.item);
-          items.push({ qty: food.qty, name: food.item });
+          items.push({ qty: food.qty, name: food.item, slotKey: slotKeyMap[food.item] || food.item });
         }
         for (const alt of food.alts) {
           const m = alt.match(/^(.+?)\s*·\s*(.+)$/);
           if (m) {
             const name = m[2].trim();
-            if (!seen.has(name)) { seen.add(name); items.push({ qty: m[1].trim(), name }); }
+            if (!seen.has(name)) { seen.add(name); items.push({ qty: m[1].trim(), name, slotKey: slotKeyMap[name] || name }); }
           }
         }
       }
     }
-    return { meal: meal.meal, icon: meal.icon, items };
+    return { meal: meal.meal, mealId: meal.id, icon: meal.icon, items };
   });
 }
 
@@ -463,7 +469,8 @@ function openRecipeModal(recipeId) {
       const sel = ing.name in selMap;
       const qty = sel ? selMap[ing.name] : ing.qty;
       html += `
-        <div class="ingredient-item${sel ? ' selected' : ''}" onclick="toggleIng(this)">
+        <div class="ingredient-item${sel ? ' selected' : ''}" onclick="toggleIngWithSlot(this)"
+             data-meal-id="${escAttr(g.mealId)}" data-slot="${escAttr(ing.slotKey)}">
           <div class="ingredient-check"></div>
           <div class="ingredient-info">
             <div class="ingredient-name">${escHtml(ing.name)}</div>
@@ -477,11 +484,37 @@ function openRecipeModal(recipeId) {
   html += `</div>`;
 
   document.getElementById('modal-body').innerHTML = html;
+  initIngSlotBlocking();
   openModal('recipe-modal');
   if (!recipe) setTimeout(() => document.getElementById('recipe-name').focus(), 320);
 }
 
 function toggleIng(el) { el.classList.toggle('selected'); }
+
+function toggleIngWithSlot(el) {
+  if (el.classList.contains('blocked')) return;
+  const mealId  = el.dataset.mealId;
+  const slotKey = el.dataset.slot;
+  const wasSelected = el.classList.contains('selected');
+  el.classList.toggle('selected');
+  const siblings = [...document.querySelectorAll('#modal-body .ingredient-item')]
+    .filter(item => item !== el && item.dataset.mealId === mealId && item.dataset.slot === slotKey);
+  if (!wasSelected) {
+    siblings.forEach(item => { item.classList.remove('selected'); item.classList.add('blocked'); });
+  } else {
+    siblings.forEach(item => item.classList.remove('blocked'));
+  }
+}
+
+function initIngSlotBlocking() {
+  document.querySelectorAll('#modal-body .ingredient-item.selected').forEach(el => {
+    const mealId  = el.dataset.mealId;
+    const slotKey = el.dataset.slot;
+    [...document.querySelectorAll('#modal-body .ingredient-item')]
+      .filter(item => item !== el && item.dataset.mealId === mealId && item.dataset.slot === slotKey)
+      .forEach(item => { item.classList.remove('selected'); item.classList.add('blocked'); });
+  });
+}
 
 /* ══════════════════════════════════════
    SALVA RICETTA
