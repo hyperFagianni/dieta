@@ -767,6 +767,33 @@
     .day-detail-name {
       font-size: .84rem; font-weight: 500; color: var(--text); flex: 1;
     }
+
+    /* ══════════════════════════════════════
+       PAGINA INFO
+    ══════════════════════════════════════ */
+    .info-text {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+    .info-text p {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 10px;
+      font-size: .9rem;
+      line-height: 1.6;
+      color: var(--text);
+      box-shadow: var(--shadow);
+    }
+    .info-text p strong {
+      display: block;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
     .day-detail-recipe-badge {
       font-size: .65rem; font-weight: 600;
       background: var(--navy); color: #fff;
