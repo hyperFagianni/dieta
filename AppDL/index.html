@@ -20,10 +20,48 @@
 </head>
 <body>
 
+<div id="page-selector" class="screen active">
+  <div class="selector-card">
+    <div class="selector-icon">🥗</div>
+    <h1>La mia Dieta</h1>
+    <p class="selector-sub">Scegli il piano alimentare da visualizzare</p>
+
+    <div id="selector-main" class="selector-group">
+      <button class="plan-btn" onclick="chooseGroup('definizione')">
+        <span class="plan-btn-title">Definizione</span>
+        <span class="plan-btn-sub">Piano ipocalorico in corso</span>
+      </button>
+      <button class="plan-btn" onclick="chooseGroup('normocalorica')">
+        <span class="plan-btn-title">Normocalorica</span>
+        <span class="plan-btn-sub">Reverse diet · 4 fasi da 2 settimane</span>
+      </button>
+    </div>
+
+    <div id="selector-weeks" class="selector-group" style="display:none">
+      <button class="plan-btn" onclick="selectPlan('norm-1-2')">
+        <span class="plan-btn-title">Settimana 1-2</span>
+      </button>
+      <button class="plan-btn" onclick="selectPlan('norm-3-4')">
+        <span class="plan-btn-title">Settimana 3-4</span>
+      </button>
+      <button class="plan-btn" onclick="selectPlan('norm-5-6')">
+        <span class="plan-btn-title">Settimana 5-6</span>
+      </button>
+      <button class="plan-btn" onclick="selectPlan('norm-7-8')">
+        <span class="plan-btn-title">Settimana 7-8</span>
+      </button>
+      <button class="plan-btn-back" onclick="backToGroups()">‹ Indietro</button>
+    </div>
+  </div>
+</div>
+
+<div id="app-shell" class="screen">
+
 <div id="page-diet" class="page active">
 <header>
+  <button class="change-plan-btn" onclick="changePlan()" title="Cambia piano">🔁</button>
   <h1>🥗 Scheda Alimentare</h1>
-  <p>Mattia Nicolini &nbsp;·&nbsp; 28/05/2026 – 22/07/2026 &nbsp;·&nbsp; 8 settimane</p>
+  <p id="diet-subtitle">Mattia Nicolini &nbsp;·&nbsp; 28/05/2026 – 22/07/2026 &nbsp;·&nbsp; 8 settimane</p>
 </header>
 <nav>
   <a href="#colazione">☀️ Colazione</a>
@@ -208,6 +246,8 @@ ti presento il tuo primo piano alimentare! Si tratta di un&rsquo;alimentazione i
     <div class="modal-footer" id="detail-footer"></div>
   </div>
 </div>
+
+</div> <!-- /#app-shell -->
 
 <script src="app.js"></script>
 </body>

@@ -1,4 +1,4 @@
-﻿const DIET = [
+﻿const DIET_DEFINIZIONE = [
   {
     id: "colazione", cls: "colazione",
     meal: "Colazione", icon: "☀️",
@@ -239,6 +239,797 @@
   }
 ];
 
+/* ══════════════════════════════════════
+   NORMOCALORICA – Reverse diet, 4 fasi da 2 settimane
+   (fonte: dieta.pdf · Programmazione dal 09/09/2026 al 03/11/2026)
+══════════════════════════════════════ */
+const DIET_NORM_1_2 = [
+  {
+    id: "colazione", cls: "colazione",
+    meal: "Colazione", icon: "☀️",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Yogurt greco magro 0% bianco", alts: [] },
+          {
+            qty: "20 gr", item: "Fiocchi d'avena",
+            alts: [
+              "20 gr · Farro Soffiato al Naturale – Più Cereali Bio",
+              "20 gr · Corn Flakes Originali – Kellogg's",
+              "20 gr · Rice Krispies – Kellogg's",
+              "20 gr · Fiocchi di frumento integrale, avena e riso – Misura"
+            ]
+          },
+          {
+            qty: "20 gr", item: "Semi di chia / Topping",
+            alts: [
+              "20 gr · Lino – semi",
+              "15 gr · Burro d'arachidi",
+              "15 gr · Cioccolato fondente"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: [
+              "15 gr · Miele",
+              "30 gr · Marmellata – Rigoni di Asiago"
+            ]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 1 – Pancakes proteici",
+        foods: [
+          { qty: "40 gr",  item: "Farina d'avena (normale o aromatizzata)", alts: [] },
+          { qty: "120 gr", item: "Uova di gallina – albume", alts: [] },
+          { qty: "50 gr",  item: "Yogurt greco magro 0% bianco", alts: [] },
+          { qty: "10 gr", item: "Burro d'arachidi", alts: ["10 gr · Cioccolato fondente"] },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: ["30 gr · Marmellata – Rigoni di Asiago", "15 gr · Sciroppo d'acero", "15 gr · Miele"]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 2 – Pane e uova",
+        foods: [
+          {
+            qty: "60 gr", item: "Pane integrale",
+            alts: ["50 gr · Pan Bauletto al Grano Duro – Mulino Bianco", "40 gr · Fette biscottate integrali"]
+          },
+          { qty: "50 gr",  item: "Uova di gallina – intero", alts: [] },
+          { qty: "150 gr", item: "Uova di gallina – albume", alts: [] },
+          { qty: "200 gr", item: "Frutta fresca", alts: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "spuntino", cls: "spuntino",
+    meal: "Spuntino", icon: "🍎",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Latte di vacca parz. scremato", alts: [] },
+          { qty: "30 gr",  item: "Proteine Vegane (pisello, riso e canapa)", alts: [] }
+        ]
+      },
+      {
+        name: "Alternativa",
+        foods: [
+          { qty: "350 gr", item: "Protein drink (Milk)", alts: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "pranzo", cls: "pranzo",
+    meal: "Pranzo", icon: "🍝",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "80 gr", item: "Pasta Integrale",
+            alts: [
+              "80 gr · Riso integrale", "80 gr · Farro", "80 gr · Quinoa", "80 gr · Grano saraceno",
+              "80 gr · Orzo perlato", "80 gr · Cous Cous", "70 gr · Polenta (farina di mais)",
+              "320 gr · Patate", "180 gr · Gnocchi di Patate", "110 gr · Pane di grano duro",
+              "120 gr · Pane integrale", "120 gr · Pane di segale", "80 gr · Piadina"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Uova di gallina – intero",
+            alts: [
+              "240 gr · Lenticchie in scatola – scolate", "240 gr · Ceci in scatola – scolati",
+              "240 gr · Piselli in scatola – scolati", "240 gr · Fagioli Borlotti secchi cotti",
+              "150 gr · Soia Edamame – Orogel", "120 gr · Lupini – ammollati",
+              "100 gr · Mozzarella Light", "120 gr · Stracchino Light – Granarolo",
+              "180 gr · Ricotta Light – Santa Lucia", "100 gr · Feta Light – Zorbas",
+              "100 gr · Certosa Light – Galbani", "50 gr · Parmigiano",
+              "100 gr · Tonno sott'olio – sgocciolato", "100 gr · Filetti di Sgombro all'olio d'oliva",
+              "120 gr · Tofu al naturale", "100 gr · Tempeh", "60 gr · Farina di ceci",
+              "60 gr · Pasta di legumi", "120 gr · Hamburger Vegetale – Valsoia",
+              "100 gr · Filetto di Salmone al Naturale – Rio Mare", "120 gr · Salmone",
+              "120 gr · Tonno", "120 gr · Sgombro / Maccarello", "70 gr · Prosciutto crudo"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "20 gr · Pesto alla Genovese"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "merenda", cls: "merenda",
+    meal: "Merenda", icon: "⚡",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          {
+            qty: "200 gr", item: "Yogurt greco magro 0% bianco",
+            alts: ["180 gr · Protein yogurt magro bianco naturale (Milk)"]
+          },
+          {
+            qty: "50 gr", item: "Corn Flakes Originali – Kellogg's",
+            alts: [
+              "50 gr · Fiocchi d'avena",
+              "50 gr · Fiocchi di frumento integrale, avena e riso – Misura",
+              "50 gr · Formelle di Frumento Integrale – Weetabix",
+              "50 gr · Rice Krispies – Kellogg's",
+              "50 gr · Gallette di mais",
+              "50 gr · Gallette di riso"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cena", cls: "cena",
+    meal: "Cena", icon: "🌙",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "80 gr", item: "Pane integrale",
+            alts: [
+              "70 gr · Pane di grano duro", "80 gr · Pane di segale", "50 gr · Cous Cous",
+              "50 gr · Polenta (farina di mais)", "50 gr · Gran Purè – Knorr", "220 gr · Gnocchi alla Romana – Rana",
+              "40 gr · Crackers (normali, riso, mais)", "40 gr · Grissini", "45 gr · Gallette di mais",
+              "45 gr · Gallette di riso", "50 gr · Integrale – Wasa", "50 gr · Fette biscottate integrali",
+              "200 gr · Patate", "60 gr · Tortillas – Roberto", "50 gr · Riso"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Carne (tagli magri)",
+            alts: [
+              "150 gr · Pollo – petto", "150 gr · Manzo", "90 gr · Sfilacci di cavallo",
+              "200 gr · Pesce bianco", "180 gr · Pesce spada", "120 gr · Salmone affumicato",
+              "250 gr · Molluschi", "250 gr · Crostacei", "250 gr · Gamberetti sgusciati",
+              "300 gr · Uova di gallina – albume", "200 gr · Fiocchi di Latte", "120 gr · Seitan al Naturale"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "60 gr · Olive verdi", "15 gr · Cioccolato fondente"]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+const DIET_NORM_3_4 = [
+  {
+    id: "colazione", cls: "colazione",
+    meal: "Colazione", icon: "☀️",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Yogurt greco magro 0% bianco", alts: [] },
+          {
+            qty: "20 gr", item: "Fiocchi d'avena",
+            alts: [
+              "20 gr · Farro Soffiato al Naturale – Più Cereali Bio",
+              "20 gr · Corn Flakes Originali – Kellogg's",
+              "20 gr · Rice Krispies – Kellogg's",
+              "20 gr · Fiocchi di frumento integrale, avena e riso – Misura"
+            ]
+          },
+          {
+            qty: "20 gr", item: "Semi di chia / Topping",
+            alts: ["20 gr · Lino – semi", "15 gr · Burro d'arachidi", "15 gr · Cioccolato fondente"]
+          },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: ["15 gr · Miele", "30 gr · Marmellata – Rigoni di Asiago"]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 1 – Pancakes proteici",
+        foods: [
+          { qty: "40 gr",  item: "Farina d'avena (normale o aromatizzata)", alts: [] },
+          { qty: "120 gr", item: "Uova di gallina – albume", alts: [] },
+          { qty: "50 gr",  item: "Yogurt greco magro 0% bianco", alts: [] },
+          { qty: "10 gr", item: "Burro d'arachidi", alts: ["10 gr · Cioccolato fondente"] },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: ["30 gr · Marmellata – Rigoni di Asiago", "15 gr · Sciroppo d'acero", "15 gr · Miele"]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 2 – Pane e uova",
+        foods: [
+          {
+            qty: "60 gr", item: "Pane integrale",
+            alts: ["50 gr · Pan Bauletto al Grano Duro – Mulino Bianco", "40 gr · Fette biscottate integrali"]
+          },
+          { qty: "50 gr",  item: "Uova di gallina – intero", alts: [] },
+          { qty: "150 gr", item: "Uova di gallina – albume", alts: [] },
+          { qty: "200 gr", item: "Frutta fresca", alts: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "spuntino", cls: "spuntino",
+    meal: "Spuntino", icon: "🍎",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Latte di vacca parz. scremato", alts: [] },
+          { qty: "30 gr",  item: "Proteine Vegane (pisello, riso e canapa)", alts: [] },
+          { qty: "200 gr", item: "Frutta fresca", alts: [] }
+        ]
+      },
+      {
+        name: "Alternativa",
+        foods: [
+          { qty: "350 gr", item: "Protein drink (Milk)", alts: [] },
+          { qty: "200 gr", item: "Frutta fresca", alts: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "pranzo", cls: "pranzo",
+    meal: "Pranzo", icon: "🍝",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "100 gr", item: "Pasta Integrale",
+            alts: [
+              "100 gr · Riso integrale", "100 gr · Farro", "100 gr · Quinoa", "100 gr · Grano saraceno",
+              "100 gr · Orzo perlato", "100 gr · Cous Cous", "90 gr · Polenta (farina di mais)",
+              "400 gr · Patate", "230 gr · Gnocchi di Patate", "140 gr · Pane di grano duro",
+              "150 gr · Pane integrale", "150 gr · Pane di segale", "100 gr · Piadina"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Uova di gallina – intero",
+            alts: [
+              "240 gr · Lenticchie in scatola – scolate", "240 gr · Ceci in scatola – scolati",
+              "240 gr · Piselli in scatola – scolati", "240 gr · Fagioli Borlotti secchi cotti",
+              "150 gr · Soia Edamame – Orogel", "120 gr · Lupini – ammollati",
+              "100 gr · Mozzarella Light", "120 gr · Stracchino Light – Granarolo",
+              "180 gr · Ricotta Light – Santa Lucia", "100 gr · Feta Light – Zorbas",
+              "100 gr · Certosa Light – Galbani", "50 gr · Parmigiano",
+              "100 gr · Tonno sott'olio – sgocciolato", "100 gr · Filetti di Sgombro all'olio d'oliva",
+              "120 gr · Tofu al naturale", "100 gr · Tempeh", "60 gr · Farina di ceci",
+              "60 gr · Pasta di legumi", "120 gr · Hamburger Vegetale – Valsoia",
+              "100 gr · Filetto di Salmone al Naturale – Rio Mare", "120 gr · Salmone",
+              "120 gr · Tonno", "120 gr · Sgombro / Maccarello", "70 gr · Prosciutto crudo"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "20 gr · Pesto alla Genovese"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "merenda", cls: "merenda",
+    meal: "Merenda", icon: "⚡",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          {
+            qty: "250 gr", item: "Latte di vacca parz. scremato",
+            alts: ["250 gr · Latte di Soia", "250 gr · Kefir bianco (da bere)", "150 gr · Kefir cremoso bianco (Milk)"]
+          },
+          {
+            qty: "50 gr", item: "Corn Flakes Originali – Kellogg's",
+            alts: [
+              "50 gr · Fiocchi d'avena", "50 gr · Fiocchi di frumento integrale, avena e riso – Misura",
+              "50 gr · Formelle di Frumento Integrale – Weetabix", "50 gr · Rice Krispies – Kellogg's",
+              "50 gr · Gallette di mais", "50 gr · Gallette di riso"
+            ]
+          }
+        ]
+      },
+      {
+        name: "Alternativa",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          {
+            qty: "100 gr", item: "Pane di grano duro",
+            alts: ["60 gr · Gallette di riso", "60 gr · Fette biscottate integrali"]
+          },
+          {
+            qty: "40 gr", item: "Marmellata – Rigoni di Asiago",
+            alts: ["20 gr · Datteri medjool disidratati", "150 gr · Succo/spremuta/centrifuga di frutta"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cena", cls: "cena",
+    meal: "Cena", icon: "🌙",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "80 gr", item: "Pane integrale",
+            alts: [
+              "70 gr · Pane di grano duro", "80 gr · Pane di segale", "50 gr · Cous Cous",
+              "50 gr · Polenta (farina di mais)", "50 gr · Gran Purè – Knorr", "220 gr · Gnocchi alla Romana – Rana",
+              "40 gr · Crackers (normali, riso, mais)", "40 gr · Grissini", "45 gr · Gallette di mais",
+              "45 gr · Gallette di riso", "50 gr · Integrale – Wasa", "50 gr · Fette biscottate integrali",
+              "200 gr · Patate", "60 gr · Tortillas – Roberto", "50 gr · Riso"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Carne (tagli magri)",
+            alts: [
+              "150 gr · Pollo – petto", "150 gr · Manzo", "90 gr · Sfilacci di cavallo",
+              "200 gr · Pesce bianco", "180 gr · Pesce spada", "120 gr · Salmone affumicato",
+              "250 gr · Molluschi", "250 gr · Crostacei", "250 gr · Gamberetti sgusciati",
+              "300 gr · Uova di gallina – albume", "200 gr · Fiocchi di Latte", "120 gr · Seitan al Naturale"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "60 gr · Olive verdi", "15 gr · Cioccolato fondente"]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+const DIET_NORM_5_6 = [
+  {
+    id: "colazione", cls: "colazione",
+    meal: "Colazione", icon: "☀️",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Yogurt greco magro 0% bianco", alts: [] },
+          {
+            qty: "60 gr", item: "Fiocchi d'avena",
+            alts: [
+              "60 gr · Farro Soffiato al Naturale – Più Cereali Bio",
+              "60 gr · Corn Flakes Originali – Kellogg's",
+              "60 gr · Rice Krispies – Kellogg's",
+              "60 gr · Fiocchi di frumento integrale, avena e riso – Misura"
+            ]
+          },
+          {
+            qty: "20 gr", item: "Semi di chia / Topping",
+            alts: ["20 gr · Lino – semi", "15 gr · Burro d'arachidi", "15 gr · Cioccolato fondente"]
+          },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: ["15 gr · Miele", "30 gr · Marmellata – Rigoni di Asiago"]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 1 – Pancakes proteici",
+        foods: [
+          { qty: "60 gr",  item: "Farina d'avena (normale o aromatizzata)", alts: [] },
+          { qty: "150 gr", item: "Uova di gallina – albume", alts: [] },
+          { qty: "50 gr",  item: "Yogurt greco magro 0% bianco", alts: [] },
+          {
+            qty: "20 gr", item: "Burro d'arachidi",
+            alts: ["20 gr · Cioccolato fondente", "20 gr · Nocciolata – Rigoni di Asiago"]
+          },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: ["30 gr · Marmellata – Rigoni di Asiago", "15 gr · Sciroppo d'acero", "15 gr · Miele"]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 2 – Pane e uova",
+        foods: [
+          {
+            qty: "80 gr", item: "Pane integrale",
+            alts: ["75 gr · Pan Bauletto al Grano Duro – Mulino Bianco", "50 gr · Fette biscottate integrali"]
+          },
+          { qty: "150 gr", item: "Uova di gallina – intero", alts: [] },
+          { qty: "300 gr", item: "Frutta fresca", alts: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "spuntino", cls: "spuntino",
+    meal: "Spuntino", icon: "🍎",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Latte di vacca parz. scremato", alts: [] },
+          { qty: "30 gr",  item: "Proteine Vegane (pisello, riso e canapa)", alts: [] },
+          { qty: "200 gr", item: "Frutta fresca", alts: [] }
+        ]
+      },
+      {
+        name: "Alternativa",
+        foods: [
+          { qty: "350 gr", item: "Protein drink (Milk)", alts: [] },
+          { qty: "200 gr", item: "Frutta fresca", alts: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "pranzo", cls: "pranzo",
+    meal: "Pranzo", icon: "🍝",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "100 gr", item: "Pasta Integrale",
+            alts: [
+              "100 gr · Riso integrale", "100 gr · Farro", "100 gr · Quinoa", "100 gr · Grano saraceno",
+              "100 gr · Orzo perlato", "100 gr · Cous Cous", "90 gr · Polenta (farina di mais)",
+              "400 gr · Patate", "230 gr · Gnocchi di Patate", "140 gr · Pane di grano duro",
+              "150 gr · Pane integrale", "150 gr · Pane di segale", "100 gr · Piadina"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Uova di gallina – intero",
+            alts: [
+              "240 gr · Lenticchie in scatola – scolate", "240 gr · Ceci in scatola – scolati",
+              "240 gr · Piselli in scatola – scolati", "240 gr · Fagioli Borlotti secchi cotti",
+              "150 gr · Soia Edamame – Orogel", "120 gr · Lupini – ammollati",
+              "100 gr · Mozzarella Light", "120 gr · Stracchino Light – Granarolo",
+              "180 gr · Ricotta Light – Santa Lucia", "100 gr · Feta Light – Zorbas",
+              "100 gr · Certosa Light – Galbani", "50 gr · Parmigiano",
+              "100 gr · Tonno sott'olio – sgocciolato", "100 gr · Filetti di Sgombro all'olio d'oliva",
+              "120 gr · Tofu al naturale", "100 gr · Tempeh", "60 gr · Farina di ceci",
+              "60 gr · Pasta di legumi", "120 gr · Hamburger Vegetale – Valsoia",
+              "100 gr · Filetto di Salmone al Naturale – Rio Mare", "120 gr · Salmone",
+              "120 gr · Tonno", "120 gr · Sgombro / Maccarello", "70 gr · Prosciutto crudo"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "20 gr · Pesto alla Genovese"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "merenda", cls: "merenda",
+    meal: "Merenda", icon: "⚡",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          {
+            qty: "250 gr", item: "Latte di vacca parz. scremato",
+            alts: ["250 gr · Latte di Soia", "250 gr · Kefir bianco (da bere)", "150 gr · Kefir cremoso bianco (Milk)"]
+          },
+          {
+            qty: "50 gr", item: "Corn Flakes Originali – Kellogg's",
+            alts: [
+              "50 gr · Fiocchi d'avena", "50 gr · Fiocchi di frumento integrale, avena e riso – Misura",
+              "50 gr · Formelle di Frumento Integrale – Weetabix", "50 gr · Rice Krispies – Kellogg's",
+              "50 gr · Gallette di mais", "50 gr · Gallette di riso"
+            ]
+          }
+        ]
+      },
+      {
+        name: "Alternativa",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          { qty: "100 gr", item: "Pane di grano duro", alts: ["60 gr · Gallette di riso", "60 gr · Fette biscottate integrali"] },
+          { qty: "40 gr", item: "Marmellata – Rigoni di Asiago", alts: ["20 gr · Datteri medjool disidratati", "150 gr · Succo/spremuta/centrifuga di frutta"] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cena", cls: "cena",
+    meal: "Cena", icon: "🌙",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "80 gr", item: "Pane integrale",
+            alts: [
+              "70 gr · Pane di grano duro", "80 gr · Pane di segale", "50 gr · Cous Cous",
+              "50 gr · Polenta (farina di mais)", "50 gr · Gran Purè – Knorr", "220 gr · Gnocchi alla Romana – Rana",
+              "40 gr · Crackers (normali, riso, mais)", "40 gr · Grissini", "45 gr · Gallette di mais",
+              "45 gr · Gallette di riso", "50 gr · Integrale – Wasa", "50 gr · Fette biscottate integrali",
+              "200 gr · Patate", "60 gr · Tortillas – Roberto", "50 gr · Riso"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Carne (tagli magri)",
+            alts: [
+              "150 gr · Pollo – petto", "150 gr · Manzo", "90 gr · Sfilacci di cavallo",
+              "200 gr · Pesce bianco", "180 gr · Pesce spada", "120 gr · Salmone affumicato",
+              "250 gr · Molluschi", "250 gr · Crostacei", "250 gr · Gamberetti sgusciati",
+              "300 gr · Uova di gallina – albume", "200 gr · Fiocchi di Latte", "120 gr · Seitan al Naturale"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "60 gr · Olive verdi", "15 gr · Cioccolato fondente"]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+const DIET_NORM_7_8 = [
+  {
+    id: "colazione", cls: "colazione",
+    meal: "Colazione", icon: "☀️",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Yogurt greco magro 0% bianco", alts: [] },
+          {
+            qty: "60 gr", item: "Fiocchi d'avena",
+            alts: [
+              "60 gr · Farro Soffiato al Naturale – Più Cereali Bio",
+              "60 gr · Corn Flakes Originali – Kellogg's",
+              "60 gr · Rice Krispies – Kellogg's",
+              "60 gr · Fiocchi di frumento integrale, avena e riso – Misura"
+            ]
+          },
+          {
+            qty: "20 gr", item: "Semi di chia / Topping",
+            alts: ["20 gr · Lino – semi", "15 gr · Burro d'arachidi", "15 gr · Cioccolato fondente"]
+          },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: ["15 gr · Miele", "30 gr · Marmellata – Rigoni di Asiago"]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 1 – Pancakes proteici",
+        foods: [
+          { qty: "60 gr",  item: "Farina d'avena (normale o aromatizzata)", alts: [] },
+          { qty: "150 gr", item: "Uova di gallina – albume", alts: [] },
+          { qty: "50 gr",  item: "Yogurt greco magro 0% bianco", alts: [] },
+          {
+            qty: "20 gr", item: "Burro d'arachidi",
+            alts: ["20 gr · Cioccolato fondente", "20 gr · Nocciolata – Rigoni di Asiago"]
+          },
+          {
+            qty: "150 gr", item: "Frutta fresca",
+            alts: ["30 gr · Marmellata – Rigoni di Asiago", "15 gr · Sciroppo d'acero", "15 gr · Miele"]
+          }
+        ]
+      },
+      {
+        name: "Alternativa 2 – Pane e uova",
+        foods: [
+          {
+            qty: "80 gr", item: "Pane integrale",
+            alts: ["75 gr · Pan Bauletto al Grano Duro – Mulino Bianco", "50 gr · Fette biscottate integrali"]
+          },
+          { qty: "150 gr", item: "Uova di gallina – intero", alts: [] },
+          { qty: "300 gr", item: "Frutta fresca", alts: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "spuntino", cls: "spuntino",
+    meal: "Spuntino", icon: "🍎",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          {
+            qty: "20 gr", item: "Frutta secca a guscio",
+            alts: ["20 gr · Cioccolato fondente", "30 gr · Parmigiano"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "pranzo", cls: "pranzo",
+    meal: "Pranzo", icon: "🍝",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "150 gr", item: "Pasta Integrale",
+            alts: [
+              "150 gr · Riso integrale", "150 gr · Farro", "150 gr · Quinoa", "150 gr · Grano saraceno",
+              "150 gr · Orzo perlato", "150 gr · Cous Cous", "140 gr · Polenta (farina di mais)",
+              "600 gr · Patate", "330 gr · Gnocchi di Patate", "210 gr · Pane di grano duro",
+              "220 gr · Pane integrale", "220 gr · Pane di segale"
+            ]
+          },
+          {
+            qty: "150 gr", item: "Uova di gallina – intero",
+            alts: [
+              "240 gr · Lenticchie in scatola – scolate", "240 gr · Ceci in scatola – scolati",
+              "240 gr · Piselli in scatola – scolati", "240 gr · Fagioli Borlotti secchi cotti",
+              "150 gr · Soia Edamame – Orogel", "120 gr · Lupini – ammollati",
+              "100 gr · Mozzarella Light", "120 gr · Stracchino Light – Granarolo",
+              "180 gr · Ricotta Light – Santa Lucia", "100 gr · Feta Light – Zorbas",
+              "100 gr · Certosa Light – Galbani", "50 gr · Parmigiano",
+              "100 gr · Tonno sott'olio – sgocciolato", "100 gr · Filetti di Sgombro all'olio d'oliva",
+              "120 gr · Tofu al naturale", "100 gr · Tempeh", "60 gr · Farina di ceci",
+              "60 gr · Pasta di legumi", "120 gr · Hamburger Vegetale – Valsoia",
+              "100 gr · Filetto di Salmone al Naturale – Rio Mare", "120 gr · Salmone",
+              "120 gr · Tonno", "120 gr · Sgombro / Maccarello", "70 gr · Prosciutto crudo"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "20 gr · Pesto alla Genovese"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "merenda", cls: "merenda",
+    meal: "Merenda", icon: "⚡",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          {
+            qty: "250 gr", item: "Latte di vacca parz. scremato",
+            alts: ["250 gr · Latte di Soia", "250 gr · Kefir bianco (da bere)", "150 gr · Kefir cremoso bianco (Milk)"]
+          },
+          {
+            qty: "50 gr", item: "Corn Flakes Originali – Kellogg's",
+            alts: [
+              "50 gr · Fiocchi d'avena", "50 gr · Fiocchi di frumento integrale, avena e riso – Misura",
+              "50 gr · Formelle di Frumento Integrale – Weetabix", "50 gr · Rice Krispies – Kellogg's",
+              "50 gr · Gallette di mais", "50 gr · Gallette di riso"
+            ]
+          }
+        ]
+      },
+      {
+        name: "Alternativa",
+        foods: [
+          { qty: "200 gr", item: "Frutta fresca", alts: [] },
+          { qty: "100 gr", item: "Pane di grano duro", alts: ["60 gr · Gallette di riso", "60 gr · Fette biscottate integrali"] },
+          { qty: "40 gr", item: "Marmellata – Rigoni di Asiago", alts: ["20 gr · Datteri medjool disidratati", "150 gr · Succo/spremuta/centrifuga di frutta"] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cena", cls: "cena",
+    meal: "Cena", icon: "🌙",
+    plates: [
+      {
+        name: "Piatto Unico",
+        foods: [
+          {
+            qty: "80 gr", item: "Pane integrale",
+            alts: [
+              "70 gr · Pane di grano duro", "80 gr · Pane di segale", "50 gr · Cous Cous",
+              "50 gr · Polenta (farina di mais)", "50 gr · Gran Purè – Knorr", "220 gr · Gnocchi alla Romana – Rana",
+              "40 gr · Crackers (normali, riso, mais)", "40 gr · Grissini", "45 gr · Gallette di mais",
+              "45 gr · Gallette di riso", "50 gr · Integrale – Wasa", "50 gr · Fette biscottate integrali",
+              "200 gr · Patate", "60 gr · Tortillas – Roberto", "50 gr · Riso"
+            ]
+          },
+          {
+            qty: "200 gr", item: "Carne (tagli magri)",
+            alts: [
+              "200 gr · Pollo – petto", "200 gr · Manzo", "120 gr · Sfilacci di cavallo",
+              "250 gr · Pesce bianco", "200 gr · Pesce spada", "150 gr · Salmone affumicato",
+              "300 gr · Molluschi", "300 gr · Crostacei", "300 gr · Gamberetti sgusciati",
+              "400 gr · Uova di gallina – albume", "300 gr · Fiocchi di Latte", "170 gr · Seitan al Naturale"
+            ]
+          },
+          { qty: "200 gr", item: "Verdura", alts: ["80 gr · Insalata"] },
+          {
+            qty: "10 gr", item: "Olio di oliva extra vergine",
+            alts: ["40 gr · Avocado", "60 gr · Olive verdi", "15 gr · Cioccolato fondente"]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+/* ══════════════════════════════════════
+   REGISTRO PIANI + PIANO ATTIVO
+══════════════════════════════════════ */
+const DIET_PLANS = {
+  definizione: {
+    id: "definizione",
+    label: "Definizione",
+    period: "Mattia Nicolini · 28/05/2026 – 22/07/2026 · 8 settimane",
+    meals: DIET_DEFINIZIONE
+  },
+  "norm-1-2": {
+    id: "norm-1-2",
+    label: "Normocalorica · Settimana 1-2",
+    period: "Mattia Nicolini · 09/09/2026 – 03/11/2026 · Normocalorica · Sett. 1-2",
+    meals: DIET_NORM_1_2
+  },
+  "norm-3-4": {
+    id: "norm-3-4",
+    label: "Normocalorica · Settimana 3-4",
+    period: "Mattia Nicolini · 09/09/2026 – 03/11/2026 · Normocalorica · Sett. 3-4",
+    meals: DIET_NORM_3_4
+  },
+  "norm-5-6": {
+    id: "norm-5-6",
+    label: "Normocalorica · Settimana 5-6",
+    period: "Mattia Nicolini · 09/09/2026 – 03/11/2026 · Normocalorica · Sett. 5-6",
+    meals: DIET_NORM_5_6
+  },
+  "norm-7-8": {
+    id: "norm-7-8",
+    label: "Normocalorica · Settimana 7-8",
+    period: "Mattia Nicolini · 09/09/2026 – 03/11/2026 · Normocalorica · Sett. 7-8",
+    meals: DIET_NORM_7_8
+  }
+};
+
+let DIET = DIET_PLANS.definizione.meals;
+
 /* ── RENDER ── */
 let uid = 0;
 
@@ -299,8 +1090,6 @@ function renderFood(food) {
 function toggle(id) {
   document.getElementById(id).classList.toggle('open');
 }
-
-renderApp();
 
 /* ── PWA: Service Worker ── */
 if ('serviceWorker' in navigator) {
@@ -997,4 +1786,49 @@ function escAttr(s) {
   return String(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-renderDays();
+/* ══════════════════════════════════════
+   SELEZIONE PIANO ALIMENTARE
+   (definizione · normocalorica sett. 1-2/3-4/5-6/7-8)
+══════════════════════════════════════ */
+const PLAN_STORAGE_KEY = 'dieta-selected-plan';
+
+function chooseGroup(group) {
+  if (group === 'definizione') { selectPlan('definizione'); return; }
+  document.getElementById('selector-main').style.display = 'none';
+  document.getElementById('selector-weeks').style.display = 'flex';
+}
+
+function backToGroups() {
+  document.getElementById('selector-weeks').style.display = 'none';
+  document.getElementById('selector-main').style.display = 'flex';
+}
+
+function selectPlan(planId) {
+  if (!DIET_PLANS[planId]) return;
+  localStorage.setItem(PLAN_STORAGE_KEY, planId);
+  activatePlan(planId);
+}
+
+function activatePlan(planId) {
+  const plan = DIET_PLANS[planId];
+  if (!plan) return;
+  DIET = plan.meals;
+  document.getElementById('diet-subtitle').textContent = plan.period;
+  document.getElementById('page-selector').classList.remove('active');
+  document.getElementById('app-shell').classList.add('active');
+  renderApp();
+  switchTab('diet');
+}
+
+function changePlan() {
+  localStorage.removeItem(PLAN_STORAGE_KEY);
+  document.getElementById('app-shell').classList.remove('active');
+  document.getElementById('selector-weeks').style.display = 'none';
+  document.getElementById('selector-main').style.display = 'flex';
+  document.getElementById('page-selector').classList.add('active');
+}
+
+(function initPlanSelector() {
+  const saved = localStorage.getItem(PLAN_STORAGE_KEY);
+  if (saved && DIET_PLANS[saved]) activatePlan(saved);
+})();

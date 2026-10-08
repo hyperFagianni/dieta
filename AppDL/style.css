@@ -259,6 +259,86 @@
       main { padding: 18px 12px 36px; }
     }
 
+    /* ══════════════════════════════════════
+       SCREEN SYSTEM (selettore piano ↔ app)
+    ══════════════════════════════════════ */
+    .screen { display: none; }
+    .screen.active { display: block; }
+    #page-selector.active {
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    #page-selector {
+      background: var(--navy);
+      padding: 24px;
+    }
+    .selector-card {
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      color: #fff;
+    }
+    .selector-icon { font-size: 2.6rem; margin-bottom: 12px; }
+    .selector-card h1 {
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -.3px; margin-bottom: 8px;
+    }
+    .selector-sub { opacity: .55; font-size: .85rem; margin-bottom: 32px; }
+
+    .selector-group { display: flex; flex-direction: column; gap: 12px; }
+    .plan-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      width: 100%;
+      padding: 18px 20px;
+      background: rgba(255,255,255,.06);
+      border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-lg);
+      color: #fff;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .plan-btn:hover  { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.22); transform: translateY(-1px); }
+    .plan-btn:active { transform: translateY(0); }
+    .plan-btn-title { font-size: 1rem; font-weight: 700; letter-spacing: -.2px; }
+    .plan-btn-sub   { font-size: .74rem; opacity: .55; font-weight: 400; }
+
+    .plan-btn-back {
+      margin-top: 4px;
+      padding: 12px;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,.5);
+      font-family: inherit;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .plan-btn-back:hover { color: #fff; }
+
+    .change-plan-btn {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .2s;
+      z-index: 1;
+    }
+    .change-plan-btn:hover { background: rgba(255,255,255,.18); }
+
     /* ── PAGE SYSTEM ── */
     body { padding-bottom: calc(62px + env(safe-area-inset-bottom)); }
     .page { display: none; }
