@@ -949,6 +949,11 @@
       border-bottom: 1px solid #f8fafc;
     }
     .day-detail-item:last-child { border-bottom: none; }
+    .day-detail-meal .macro-strip {
+      padding: 10px 0 0;
+      margin-top: 8px;
+      border-top: 1px dashed var(--border);
+    }
     .day-detail-qty {
       font-size: .7rem; font-weight: 600;
       padding: 2px 9px; border-radius: var(--radius-sm);

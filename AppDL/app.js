@@ -2011,22 +2011,28 @@ function renderDays() {
    TOTALI NUTRIZIONALI DI UNA GIORNATA
    Somma gli alimenti scelti in ogni pasto + gli ingredienti delle ricette selezionate
 ══════════════════════════════════════ */
+function computeMealMacros(day, mealId) {
+  let total = { kcal: 0, protein: 0, fat: 0, carbs: 0 };
+  const ms = day.meals[mealId];
+  if (!ms) return total;
+  const recipes = loadRecipes();
+  for (const food of Object.values(ms.foods || {})) {
+    total = addMacros(total, foodMacros(food.name, food.qty));
+  }
+  for (const rid of ms.recipes || []) {
+    const rec = recipes.find(r => r.id === rid);
+    if (!rec) continue;
+    for (const ing of rec.ingredients) {
+      total = addMacros(total, foodMacros(ing.name, ing.qty));
+    }
+  }
+  return total;
+}
+
 function computeDayTotals(day) {
   let total = { kcal: 0, protein: 0, fat: 0, carbs: 0 };
-  const recipes = loadRecipes();
   for (const meal of DIET) {
-    const ms = day.meals[meal.id];
-    if (!ms) continue;
-    for (const food of Object.values(ms.foods || {})) {
-      total = addMacros(total, foodMacros(food.name, food.qty));
-    }
-    for (const rid of ms.recipes || []) {
-      const rec = recipes.find(r => r.id === rid);
-      if (!rec) continue;
-      for (const ing of rec.ingredients) {
-        total = addMacros(total, foodMacros(ing.name, ing.qty));
-      }
-    }
+    total = addMacros(total, computeMealMacros(day, meal.id));
   }
   return total;
 }
@@ -2093,6 +2099,7 @@ function openDayDetail(id) {
         <span class="day-detail-name">${escHtml(rec.name)}</span>
       </div>`;
     }
+    html += macroStripHTML(computeMealMacros(day, mealDef.id));
     html += `</div>`;
   }
   html += renderDayTotalsHTML(day);
