@@ -5,6 +5,12 @@
       --accent: #1d4ed8;
       --accent-light: #eff6ff;
       --accent-mid:   #bfdbfe;
+      --fat:     #d97706;
+      --fat-light:     #fef3c7;
+      --protein: #e11d48;
+      --protein-light: #ffe4e6;
+      --carbs:   #059669;
+      --carbs-light:   #d1fae5;
       --bg:     #f8fafc;
       --card:   #ffffff;
       --border: #e2e8f0;
@@ -249,11 +255,63 @@
       opacity: .6;
     }
 
+    /* ══════════════════════════════════════
+       TAB VALORI NUTRIZIONALI
+    ══════════════════════════════════════ */
+    .macro-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0 22px 14px;
+      margin-top: -6px;
+    }
+    .macro-chip {
+      font-size: .68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 3px 9px;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+    .macro-chip.macro-kcal {
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+    .macro-chip.macro-fat {
+      color: var(--fat);
+      background: var(--fat-light);
+    }
+    .macro-chip.macro-protein {
+      color: var(--protein);
+      background: var(--protein-light);
+    }
+    .macro-chip.macro-carbs {
+      color: var(--carbs);
+      background: var(--carbs-light);
+    }
+    .alt-list-nutri li {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      padding: 10px 0;
+    }
+    .alt-nutri-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .alt-list-nutri .macro-strip {
+      padding: 0 0 0 15px;
+      margin-top: 0;
+    }
+
     @media (max-width: 480px) {
       header { padding: 32px 18px 24px; }
       header h1 { font-size: 1.25rem; }
       .food-row { padding: 12px 16px; gap: 10px; }
       .meal-header { padding: 16px 18px; }
+      .macro-strip { padding: 0 16px 12px; }
       .plate-label { padding: 8px 16px; }
       .alt-panel { padding: 10px 16px 14px 26px; }
       main { padding: 18px 12px 36px; }
@@ -899,6 +957,65 @@
     }
     .day-detail-name {
       font-size: .84rem; font-weight: 500; color: var(--text); flex: 1;
+    }
+
+    /* ══════════════════════════════════════
+       TOTALI NUTRIZIONALI GIORNATA
+    ══════════════════════════════════════ */
+    .day-totals {
+      margin-top: 8px;
+      padding-top: 18px;
+      border-top: 2px solid var(--border);
+    }
+    .day-totals-kcal {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 0 20px;
+    }
+    .day-totals-kcal-value {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--navy);
+    }
+    .day-totals-kcal-unit {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .day-totals-macros {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .day-totals-macro {
+      text-align: center;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 6px;
+    }
+    .day-totals-macro-label {
+      font-size: .64rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .day-totals-macro-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -.3px;
+    }
+    .day-totals-macro-pct {
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 2px;
     }
 
     /* ══════════════════════════════════════

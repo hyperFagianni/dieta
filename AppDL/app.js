@@ -1030,6 +1030,135 @@ const DIET_PLANS = {
 
 let DIET = DIET_PLANS.definizione.meals;
 
+/* ══════════════════════════════════════
+   VALORI NUTRIZIONALI (kcal/macro per 100 g)
+   Chiave = nome esatto dell'alimento come appare in DIET (food.item o alt)
+══════════════════════════════════════ */
+const NUTRITION = {
+  'Avocado': { kcal: 160, protein: 2, fat: 14.7, carbs: 8.5 },
+  'Barretta ai cereali e cioccolato': { kcal: 410, protein: 6.5, fat: 15, carbs: 64 },
+  'Burro d\'arachidi': { kcal: 599, protein: 25, fat: 50, carbs: 18 },
+  'Carne (tagli magri)': { kcal: 115, protein: 21, fat: 3, carbs: 0 },
+  'Ceci in scatola – scolati': { kcal: 139, protein: 7.3, fat: 2.1, carbs: 22.4 },
+  'Certosa Light – Galbani': { kcal: 163, protein: 17, fat: 9, carbs: 3.4 },
+  'Cioccolato fondente': { kcal: 598, protein: 7.8, fat: 42.6, carbs: 45.9 },
+  'Corn Flakes Originali – Kellogg\'s': { kcal: 378, protein: 7, fat: 0.9, carbs: 84 },
+  'Cous Cous': { kcal: 376, protein: 12.8, fat: 1, carbs: 77.5 },
+  'Crackers (normali, riso, mais)': { kcal: 428, protein: 9.4, fat: 10, carbs: 80.1 },
+  'Crostacei': { kcal: 71, protein: 13.6, fat: 0.6, carbs: 2.9 },
+  'Datteri medjool disidratati': { kcal: 277, protein: 1.8, fat: 0.2, carbs: 75 },
+  'Fagioli Borlotti secchi cotti': { kcal: 123, protein: 8.25, fat: 0.35, carbs: 22.1 },
+  'Farina d\'avena (normale o aromatizzata)': { kcal: 385, protein: 12.6, fat: 7.1, carbs: 72.3 },
+  'Farina di ceci': { kcal: 387, protein: 22.4, fat: 6.7, carbs: 57.8 },
+  'Farro': { kcal: 338, protein: 14.6, fat: 2.4, carbs: 70.2 },
+  'Farro Soffiato al Naturale – Più Cereali Bio': { kcal: 361, protein: 12.5, fat: 2.6, carbs: 68 },
+  'Feta Light – Zorbas': { kcal: 140, protein: 19, fat: 7, carbs: 0.7 },
+  'Fette biscottate integrali': { kcal: 379, protein: 14.2, fat: 10, carbs: 62 },
+  'Filetti di Sgombro all\'olio d\'oliva': { kcal: 311, protein: 17, fat: 27, carbs: 0 },
+  'Filetto di Salmone al Naturale – Rio Mare': { kcal: 220, protein: 25, fat: 14, carbs: 0 },
+  'Fiocchi d\'avena': { kcal: 373, protein: 8, fat: 7.5, carbs: 72.8 },
+  'Fiocchi di frumento integrale, avena e riso – Misura': { kcal: 383, protein: 21, fat: 3.6, carbs: 62 },
+  'Fiocchi di Latte': { kcal: 89, protein: 12, fat: 1.8, carbs: 4.3 },
+  'Formelle di Frumento Integrale – Weetabix': { kcal: 362, protein: 12, fat: 2, carbs: 69 },
+  'Frutta fresca': { kcal: 48, protein: 0.5, fat: 0.3, carbs: 11 },
+  'Frutta secca a guscio': { kcal: 620, protein: 17, fat: 58, carbs: 17 },
+  'Gallette di mais': { kcal: 385, protein: 8, fat: 2.8, carbs: 80 },
+  'Gallette di riso': { kcal: 385, protein: 8.3, fat: 2.8, carbs: 81 },
+  'Gamberetti sgusciati': { kcal: 85, protein: 16.5, fat: 0.9, carbs: 2.9 },
+  'Gnocchi alla Romana – Rana': { kcal: 170, protein: 6.5, fat: 7, carbs: 20 },
+  'Gnocchi di Patate': { kcal: 130, protein: 3.6, fat: 0.7, carbs: 26.5 },
+  'Gran Purè – Knorr': { kcal: 318, protein: 9, fat: 0.8, carbs: 73 },
+  'Grano saraceno': { kcal: 343, protein: 13.2, fat: 3.4, carbs: 71.5 },
+  'Grissini': { kcal: 431, protein: 12.3, fat: 13.9, carbs: 68.4 },
+  'Hamburger Vegetale – Valsoia': { kcal: 167, protein: 19, fat: 6.5, carbs: 5.9 },
+  'Insalata': { kcal: 16, protein: 1.3, fat: 0.2, carbs: 2.5 },
+  'Integrale – Wasa': { kcal: 338, protein: 9, fat: 1.5, carbs: 62 },
+  'Kefir bianco (da bere)': { kcal: 60, protein: 3.4, fat: 3, carbs: 4.5 },
+  'Kefir cremoso bianco (Milk)': { kcal: 76, protein: 3.4, fat: 2.6, carbs: 9 },
+  'Latte di Soia': { kcal: 45, protein: 3.3, fat: 2, carbs: 2.7 },
+  'Latte di vacca parz. scremato': { kcal: 46, protein: 3.3, fat: 1.6, carbs: 4.9 },
+  'Lenticchie in scatola – scolate': { kcal: 101, protein: 7.6, fat: 0.4, carbs: 16.9 },
+  'Lino – semi': { kcal: 534, protein: 18.3, fat: 42.2, carbs: 28.9 },
+  'Lupini – ammollati': { kcal: 96, protein: 14, fat: 3.4, carbs: 2.8 },
+  'Manzo': { kcal: 111, protein: 21.3, fat: 3, carbs: 0 },
+  'Marmellata – Rigoni di Asiago': { kcal: 155, protein: 0, fat: 0, carbs: 38 },
+  'Miele': { kcal: 304, protein: 0.3, fat: 0, carbs: 82.4 },
+  'Molluschi': { kcal: 72, protein: 12, fat: 1.5, carbs: 2.5 },
+  'Mozzarella Light': { kcal: 148, protein: 18, fat: 7, carbs: 1.3 },
+  'Nocciolata – Rigoni di Asiago': { kcal: 544, protein: 8.1, fat: 32, carbs: 51 },
+  'Olio di oliva extra vergine': { kcal: 884, protein: 0, fat: 100, carbs: 0 },
+  'Olive verdi': { kcal: 145, protein: 1, fat: 15, carbs: 4 },
+  'Orzo perlato': { kcal: 352, protein: 9.9, fat: 1.2, carbs: 77.7 },
+  'Pan Bauletto al Grano Duro – Mulino Bianco': { kcal: 258, protein: 8.7, fat: 3.9, carbs: 45 },
+  'Pane di grano duro': { kcal: 275, protein: 9, fat: 3.8, carbs: 52 },
+  'Pane di segale': { kcal: 219, protein: 8.3, fat: 1.7, carbs: 45.4 },
+  'Pane integrale': { kcal: 224, protein: 7.5, fat: 1.3, carbs: 48.5 },
+  'Parmigiano': { kcal: 392, protein: 33, fat: 28, carbs: 0 },
+  'Pasta di legumi': { kcal: 344, protein: 20, fat: 3.3, carbs: 50 },
+  'Pasta Integrale': { kcal: 335, protein: 13, fat: 2.5, carbs: 66.2 },
+  'Patate': { kcal: 80, protein: 2.1, fat: 0.2, carbs: 17 },
+  'Pesce bianco': { kcal: 71, protein: 17, fat: 0.3, carbs: 0 },
+  'Pesce spada': { kcal: 110, protein: 19.8, fat: 3.5, carbs: 0 },
+  'Pesto alla Genovese': { kcal: 430, protein: 6, fat: 43, carbs: 5 },
+  'Piadina': { kcal: 298, protein: 7, fat: 8.5, carbs: 51 },
+  'Piselli in scatola – scolati': { kcal: 60, protein: 4.6, fat: 0.5, carbs: 7.6 },
+  'Polenta (farina di mais)': { kcal: 361, protein: 8.1, fat: 3.6, carbs: 76.9 },
+  'Pollo – petto': { kcal: 100, protein: 23.3, fat: 0.8, carbs: 0 },
+  'Prosciutto crudo': { kcal: 159, protein: 29.3, fat: 4.6, carbs: 0 },
+  'Protein drink (Milk)': { kcal: 62, protein: 11, fat: 0.2, carbs: 4 },
+  'Protein yogurt magro bianco naturale (Milk)': { kcal: 63, protein: 10, fat: 0.3, carbs: 4.5 },
+  'Proteine Vegane (pisello, riso e canapa)': { kcal: 390, protein: 75, fat: 7, carbs: 8 },
+  'Quinoa': { kcal: 368, protein: 14.1, fat: 6.1, carbs: 64.2 },
+  'Rice Krispies – Kellogg\'s': { kcal: 389, protein: 7, fat: 1.2, carbs: 86 },
+  'Ricotta Light – Santa Lucia': { kcal: 127, protein: 7.7, fat: 9, carbs: 3.9 },
+  'Riso': { kcal: 332, protein: 6.7, fat: 0.6, carbs: 80.4 },
+  'Riso integrale': { kcal: 337, protein: 7.5, fat: 2.8, carbs: 74.5 },
+  'Salmone': { kcal: 185, protein: 18.4, fat: 12, carbs: 1 },
+  'Salmone affumicato': { kcal: 147, protein: 25.4, fat: 4.5, carbs: 1.2 },
+  'Sciroppo d\'acero': { kcal: 260, protein: 0, fat: 0, carbs: 67 },
+  'Seitan al Naturale': { kcal: 125, protein: 22, fat: 1.9, carbs: 4 },
+  'Semi di chia': { kcal: 486, protein: 16.5, fat: 30.7, carbs: 42.1 },
+  'Semi di chia / Topping': { kcal: 486, protein: 16.5, fat: 30.7, carbs: 42.1 },
+  'Sfilacci di cavallo': { kcal: 189, protein: 34.8, fat: 5, carbs: 0.9 },
+  'Sgombro / Maccarello': { kcal: 170, protein: 17, fat: 11.1, carbs: 0.5 },
+  'Soia Edamame – Orogel': { kcal: 127, protein: 11.5, fat: 5, carbs: 6.2 },
+  'Stracchino Light – Granarolo': { kcal: 183, protein: 16, fat: 12, carbs: 2.7 },
+  'Succo/spremuta/centrifuga di frutta': { kcal: 42, protein: 0.6, fat: 0.1, carbs: 9.5 },
+  'Tempeh': { kcal: 192, protein: 20.3, fat: 10.8, carbs: 7.6 },
+  'Tofu al naturale': { kcal: 76, protein: 8.1, fat: 4.8, carbs: 1.9 },
+  'Tonno': { kcal: 159, protein: 21.5, fat: 8.1, carbs: 0.1 },
+  'Tonno sott\'olio – sgocciolato': { kcal: 192, protein: 25, fat: 10, carbs: 0 },
+  'Tortillas – Roberto': { kcal: 303, protein: 7.1, fat: 5.9, carbs: 54 },
+  'Uova di gallina – albume': { kcal: 48, protein: 10.9, fat: 0.2, carbs: 0.7 },
+  'Uova di gallina – intero': { kcal: 143, protein: 12.6, fat: 9.5, carbs: 0.7 },
+  'Uova di gallina – intero (o proteina a scelta)': { kcal: 143, protein: 12.6, fat: 9.5, carbs: 0.7 },
+  'Verdura': { kcal: 25, protein: 1.3, fat: 0.2, carbs: 3.5 },
+  'Yogurt greco magro 0% bianco': { kcal: 57, protein: 10, fat: 0.3, carbs: 3.6 },
+};
+
+function parseGrams(qtyStr) {
+  const m = String(qtyStr).match(/([\d.,]+)\s*gr/i);
+  return m ? parseFloat(m[1].replace(',', '.')) : 0;
+}
+
+function foodMacros(name, qtyStr) {
+  const n = NUTRITION[name];
+  if (!n) return { kcal: 0, protein: 0, fat: 0, carbs: 0 };
+  const factor = parseGrams(qtyStr) / 100;
+  return {
+    kcal: n.kcal * factor,
+    protein: n.protein * factor,
+    fat: n.fat * factor,
+    carbs: n.carbs * factor
+  };
+}
+
+function addMacros(a, b) {
+  return { kcal: a.kcal + b.kcal, protein: a.protein + b.protein, fat: a.fat + b.fat, carbs: a.carbs + b.carbs };
+}
+
+function round1(n) { return Math.round(n * 10) / 10; }
+
 /* ── RENDER ── */
 let uid = 0;
 
@@ -1089,6 +1218,87 @@ function renderFood(food) {
 
 function toggle(id) {
   document.getElementById(id).classList.toggle('open');
+}
+
+/* ══════════════════════════════════════
+   TAB "VALORI NUTRIZIONALI"
+   Stessa struttura della dieta (pasto → piatto → alimento + alternative),
+   ma ogni riga mostra kcal/grassi/proteine/carbo calcolati sulla grammatura esatta.
+══════════════════════════════════════ */
+function renderNutritionPage() {
+  const el = document.getElementById('valori-app');
+  if (!el) return;
+  el.innerHTML = DIET.map(renderNutritionMeal).join('');
+}
+
+function renderNutritionMeal(m) {
+  const platesHTML = m.plates.map(renderNutritionPlate).join('');
+  return `
+    <article class="meal-card ${m.cls}" id="val-${m.id}">
+      <div class="meal-header">
+        <span class="meal-icon">${m.icon}</span>
+        <span class="meal-title">${m.meal}</span>
+      </div>
+      ${platesHTML}
+    </article>`;
+}
+
+function renderNutritionPlate(plate) {
+  const foodsHTML = plate.foods.map(renderNutritionFood).join('');
+  return `
+    <div class="plate-label">${plate.name}</div>
+    ${foodsHTML}`;
+}
+
+function renderNutritionFood(food) {
+  const id = `nf${uid++}`;
+  const hasAlts = food.alts.length > 0;
+  const baseMacros = foodMacros(food.item, food.qty);
+
+  const altPanel = hasAlts ? `
+    <div class="alt-panel">
+      <h4>Valori delle alternative:</h4>
+      <ul class="alt-list alt-list-nutri">
+        ${food.alts.map(a => {
+          const am = a.match(/^(.+?)\s*·\s*(.+)$/);
+          if (!am) return '';
+          const qty = am[1].trim(), name = am[2].trim();
+          const altMacros = foodMacros(name, qty);
+          return `
+          <li>
+            <div class="alt-nutri-row">
+              <span class="dot"></span>
+              <span>${qty} · ${name}</span>
+            </div>
+            ${macroStripHTML(altMacros)}
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>` : '';
+
+  const onClick = hasAlts ? `onclick="toggle('${id}')"` : '';
+  const badge   = hasAlts ? `<span class="badge">${food.alts.length} alt.</span>` : '';
+  const chevron = hasAlts ? `<span class="chevron">▼</span>` : '';
+
+  return `
+    <div class="food-item" id="${id}">
+      <div class="food-row ${hasAlts ? 'clickable' : ''}" ${onClick}>
+        <span class="food-qty">${food.qty}</span>
+        <span class="food-name">${food.item}</span>
+        ${badge}${chevron}
+      </div>
+      ${macroStripHTML(baseMacros)}
+      ${altPanel}
+    </div>`;
+}
+
+function macroStripHTML(m) {
+  return `<div class="macro-strip">
+    <span class="macro-chip macro-kcal">🔥 ${Math.round(m.kcal)} kcal</span>
+    <span class="macro-chip macro-fat">🥑 ${round1(m.fat)} g</span>
+    <span class="macro-chip macro-protein">🍗 ${round1(m.protein)} g</span>
+    <span class="macro-chip macro-carbs">🌾 ${round1(m.carbs)} g</span>
+  </div>`;
 }
 
 /* ── PWA: Service Worker ── */
@@ -1167,6 +1377,7 @@ function switchTab(tab) {
   window.scrollTo(0, 0);
   if (tab === 'recipes') renderRecipes();
   if (tab === 'days') renderDays();
+  if (tab === 'valori') renderNutritionPage();
 }
 
 /* ══════════════════════════════════════
@@ -1796,6 +2007,62 @@ function renderDays() {
 /* ══════════════════════════════════════
    DETTAGLIO GIORNATA
 ══════════════════════════════════════ */
+/* ══════════════════════════════════════
+   TOTALI NUTRIZIONALI DI UNA GIORNATA
+   Somma gli alimenti scelti in ogni pasto + gli ingredienti delle ricette selezionate
+══════════════════════════════════════ */
+function computeDayTotals(day) {
+  let total = { kcal: 0, protein: 0, fat: 0, carbs: 0 };
+  const recipes = loadRecipes();
+  for (const meal of DIET) {
+    const ms = day.meals[meal.id];
+    if (!ms) continue;
+    for (const food of Object.values(ms.foods || {})) {
+      total = addMacros(total, foodMacros(food.name, food.qty));
+    }
+    for (const rid of ms.recipes || []) {
+      const rec = recipes.find(r => r.id === rid);
+      if (!rec) continue;
+      for (const ing of rec.ingredients) {
+        total = addMacros(total, foodMacros(ing.name, ing.qty));
+      }
+    }
+  }
+  return total;
+}
+
+function renderDayTotalsHTML(day) {
+  const t = computeDayTotals(day);
+  const kcal = Math.round(t.kcal);
+  const fatPct     = t.kcal > 0 ? Math.round((t.fat * 9 / t.kcal) * 100) : 0;
+  const proteinPct = t.kcal > 0 ? Math.round((t.protein * 4 / t.kcal) * 100) : 0;
+  const carbsPct   = t.kcal > 0 ? Math.round((t.carbs * 4 / t.kcal) * 100) : 0;
+  return `
+    <div class="day-totals">
+      <div class="day-totals-kcal">
+        <span class="day-totals-kcal-value">${kcal}</span>
+        <span class="day-totals-kcal-unit">kcal totali</span>
+      </div>
+      <div class="day-totals-macros">
+        <div class="day-totals-macro">
+          <div class="day-totals-macro-label">Grassi</div>
+          <div class="day-totals-macro-value">${Math.round(t.fat)} g</div>
+          <div class="day-totals-macro-pct">${fatPct}%</div>
+        </div>
+        <div class="day-totals-macro">
+          <div class="day-totals-macro-label">Proteine</div>
+          <div class="day-totals-macro-value">${Math.round(t.protein)} g</div>
+          <div class="day-totals-macro-pct">${proteinPct}%</div>
+        </div>
+        <div class="day-totals-macro">
+          <div class="day-totals-macro-label">Carboidrati</div>
+          <div class="day-totals-macro-value">${Math.round(t.carbs)} g</div>
+          <div class="day-totals-macro-pct">${carbsPct}%</div>
+        </div>
+      </div>
+    </div>`;
+}
+
 function openDayDetail(id) {
   const day = loadDays().find(d => d.id === id);
   if (!day) return;
@@ -1828,6 +2095,7 @@ function openDayDetail(id) {
     }
     html += `</div>`;
   }
+  html += renderDayTotalsHTML(day);
   document.getElementById('day-detail-body').innerHTML = html;
   document.getElementById('day-detail-footer').innerHTML = `
     <button class="btn-secondary" onclick="closeModal('day-detail-modal');openDayEditor('${id}')">Modifica giornata</button>
