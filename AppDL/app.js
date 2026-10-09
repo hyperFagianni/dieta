@@ -1396,11 +1396,15 @@ function persistDays(arr) { localStorage.setItem('dieta-days', JSON.stringify(ar
    Ogni "slot" = cibo principale + le sue alternative
    → selezionarne uno blocca gli altri dello stesso slot
 ══════════════════════════════════════ */
-function getMealSlots(mealId) {
+// plateIndex omesso → unisce gli slot di TUTTI i piatti del pasto (usato dalle Ricette).
+// plateIndex specificato → slot del solo piatto scelto (usato dalle Giornate, dove
+// Piatto Unico e le Alternative complete sono dish mutuamente esclusivi).
+function getMealSlots(mealId, plateIndex) {
   const meal = DIET.find(m => m.id === mealId);
+  const plates = (plateIndex === undefined || plateIndex === null) ? meal.plates : [meal.plates[plateIndex]];
   const seen = new Set();
   const slots = [];
-  for (const plate of meal.plates) {
+  for (const plate of plates) {
     for (const food of plate.foods) {
       if (seen.has(food.item)) continue;
       const slot = { key: food.item, items: [{ name: food.item, qty: food.qty }] };
@@ -1418,18 +1422,31 @@ function getMealSlots(mealId) {
   return slots;
 }
 
-// Mappa: nomeIngrediente → slotKey per un dato pasto
-function getSlotMap(mealId) {
+// Mappa: nomeIngrediente → slotKey per un dato pasto (eventualmente per un solo piatto)
+function getSlotMap(mealId, plateIndex) {
   const map = {};
-  for (const slot of getMealSlots(mealId)) {
+  for (const slot of getMealSlots(mealId, plateIndex)) {
     for (const item of slot.items) map[item.name] = slot.key;
   }
   return map;
 }
 
-// Slot bloccati dalle ricette selezionate in un pasto
+// Normalizza/ripara l'indice del piatto scelto per un pasto nell'editor giornata
+// (garantisce un valore valido anche su giorni salvati prima di questa funzione,
+// o se il piano dieta attivo è cambiato e ha un numero diverso di piatti)
+function clampPlateIndex(meal, ms) {
+  const max = meal.plates.length - 1;
+  let idx = ms.plateIndex;
+  if (idx === undefined || idx === null || idx < 0 || idx > max) idx = 0;
+  ms.plateIndex = idx;
+  return idx;
+}
+
+// Slot bloccati dalle ricette selezionate in un pasto (nel piatto correntemente scelto)
 function getRecipeBlockedSlots(mealId, dayState) {
-  const slotMap = getSlotMap(mealId);
+  const meal = DIET.find(m => m.id === mealId);
+  const plateIndex = clampPlateIndex(meal, dayState.meals[mealId]);
+  const slotMap = getSlotMap(mealId, plateIndex);
   const blocked = new Set();
   for (const rid of dayState.meals[mealId].recipes) {
     const rec = loadRecipes().find(r => r.id === rid);
@@ -1459,10 +1476,15 @@ function initDayState(dayId) {
   const existing = dayId ? loadDays().find(d => d.id === dayId) : null;
   if (existing) {
     _dayState = JSON.parse(JSON.stringify(existing));
+    // Ripara/completa lo stato per pasti assenti o salvati prima dell'introduzione di plateIndex
+    for (const meal of DIET) {
+      if (!_dayState.meals[meal.id]) _dayState.meals[meal.id] = { plateIndex: 0, foods: {}, recipes: [] };
+      else clampPlateIndex(meal, _dayState.meals[meal.id]);
+    }
   } else {
     _dayState = {
       id: null, title: '',
-      meals: Object.fromEntries(DIET.map(m => [m.id, { foods: {}, recipes: [] }]))
+      meals: Object.fromEntries(DIET.map(m => [m.id, { plateIndex: 0, foods: {}, recipes: [] }]))
     };
   }
 }
@@ -1501,7 +1523,8 @@ function renderDayEditor() {
 function buildMealSectionHTML(mealId) {
   const meal      = DIET.find(m => m.id === mealId);
   const ms        = _dayState.meals[mealId];
-  const slots     = getMealSlots(mealId);
+  const plateIndex = clampPlateIndex(meal, ms);
+  const slots     = getMealSlots(mealId, plateIndex);
   const recBlocked = getRecipeBlockedSlots(mealId, _dayState);
   const usedRecs  = getUsedRecipeIds(_dayState);
   const recipes   = loadRecipes();
@@ -1523,16 +1546,33 @@ function buildMealSectionHTML(mealId) {
       </div>
     </div>
     <div class="meal-section-body" id="mbody-${mealId}" style="display:${isOpen ? 'block' : 'none'}">
-      ${buildMealBodyHTML(mealId, slots, ms, recBlocked, usedRecs, recipes)}
+      ${buildMealBodyHTML(mealId, meal, plateIndex, slots, ms, recBlocked, usedRecs, recipes)}
     </div>
   </div>`;
   return html;
 }
 
-function buildMealBodyHTML(mealId, slots, ms, recBlocked, usedRecs, recipes) {
+function buildMealBodyHTML(mealId, meal, plateIndex, slots, ms, recBlocked, usedRecs, recipes) {
   let html = '';
 
-  // ── Slot cibi ──
+  // ── Scelta del piatto (solo se il pasto ha più piatti: Piatto Unico + Alternative complete) ──
+  if (meal.plates.length > 1) {
+    html += `<div class="plate-chooser">
+      <div class="plate-chooser-label">Scegli il piatto</div>`;
+    meal.plates.forEach((plate, i) => {
+      const isSel = i === plateIndex;
+      html += `<div class="plate-choice-item ${isSel ? 'selected' : ''}"
+        data-meal="${mealId}" data-plate-index="${i}"
+        onclick="handlePlateChoice(this)">
+        <div class="plate-radio"></div>
+        <div class="plate-choice-name">${escHtml(plate.name)}</div>
+      </div>`;
+    });
+    html += `</div>
+    <div class="slot-section-label">${escHtml(meal.plates[plateIndex].name)}</div>`;
+  }
+
+  // ── Slot cibi (del piatto scelto) ──
   for (const slot of slots) {
     const isSlotBlocked = recBlocked.has(slot.key);
     const selectedFood  = ms.foods[slot.key];
@@ -1581,7 +1621,7 @@ function buildMealBodyHTML(mealId, slots, ms, recBlocked, usedRecs, recipes) {
       const usedElsewhere = !isSel && usedRecs.has(rec.id);
       const blocked       = usedElsewhere;
       // Conflitti: ingredienti della ricetta vs cibi già selezionati nel pasto
-      const slotMap = getSlotMap(mealId);
+      const slotMap = getSlotMap(mealId, plateIndex);
       const conflictSlots = isSel ? [] : rec.ingredients
         .map(ing => slotMap[ing.name])
         .filter(sk => sk && ms.foods[sk]);
@@ -1614,6 +1654,22 @@ function toggleMealSection(mealId) {
   const open = body.style.display !== 'none';
   body.style.display = open ? 'none' : 'block';
   sec.classList.toggle('open', !open);
+}
+
+/* ══════════════════════════════════════
+   SCELTA PIATTO (Piatto Unico / Alternativa completa)
+   Cambiare piatto azzera i cibi scelti nel piatto precedente,
+   perché i loro slot non appartengono più al piatto visibile.
+   Le ricette restano (non sono legate a un piatto specifico).
+══════════════════════════════════════ */
+function handlePlateChoice(el) {
+  const mealId   = el.dataset.meal;
+  const newIndex = parseInt(el.dataset.plateIndex, 10);
+  const ms = _dayState.meals[mealId];
+  if (ms.plateIndex === newIndex) return;
+  ms.plateIndex = newIndex;
+  ms.foods = {};
+  refreshMealSection(mealId);
 }
 
 /* ══════════════════════════════════════
@@ -1662,12 +1718,14 @@ function handleRecipeToggle(el) {
 function refreshMealSection(mealId) {
   const body = document.getElementById(`mbody-${mealId}`);
   if (!body) return;
+  const meal     = DIET.find(m => m.id === mealId);
   const ms       = _dayState.meals[mealId];
-  const slots    = getMealSlots(mealId);
+  const plateIndex = clampPlateIndex(meal, ms);
+  const slots    = getMealSlots(mealId, plateIndex);
   const recBlk   = getRecipeBlockedSlots(mealId, _dayState);
   const usedRecs = getUsedRecipeIds(_dayState);
   const recipes  = loadRecipes();
-  body.innerHTML = buildMealBodyHTML(mealId, slots, ms, recBlk, usedRecs, recipes);
+  body.innerHTML = buildMealBodyHTML(mealId, meal, plateIndex, slots, ms, recBlk, usedRecs, recipes);
   // aggiorna badge nel header
   const selCount = Object.keys(ms.foods).length + ms.recipes.length;
   const badge = document.getElementById(`mbadge-${mealId}`);
@@ -1749,10 +1807,12 @@ function openDayDetail(id) {
     const foods   = Object.values(ms?.foods || {});
     const recipes = (ms?.recipes || []).map(rid => loadRecipes().find(r => r.id === rid)).filter(Boolean);
     if (!foods.length && !recipes.length) continue;
+    const plateName = mealDef.plates.length > 1 ? mealDef.plates[clampPlateIndex(mealDef, ms)].name : null;
     html += `<div class="day-detail-meal">
       <div class="day-detail-meal-header">
         <span>${mealDef.icon}</span>
         <span class="day-detail-meal-title">${mealDef.meal}</span>
+        ${plateName ? `<span class="day-detail-plate-tag">${escHtml(plateName)}</span>` : ''}
       </div>`;
     for (const f of foods) {
       html += `<div class="day-detail-item">

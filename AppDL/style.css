@@ -784,6 +784,46 @@
     }
 
     /* ══════════════════════════════════════
+       SCELTA PIATTO (Piatto Unico / Alternative complete)
+    ══════════════════════════════════════ */
+    .plate-chooser { margin: 4px 0 2px; }
+    .plate-chooser-label {
+      font-size: .63rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.3px;
+      color: var(--text-muted);
+      padding: 10px 0 8px;
+    }
+    .plate-choice-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      background: #fff;
+      transition: border-color .15s, background .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .plate-choice-item:last-child { margin-bottom: 0; }
+    .plate-choice-item.selected { border-color: var(--accent); background: var(--accent-light); }
+    .plate-radio {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s;
+    }
+    .plate-choice-item.selected .plate-radio { border-color: var(--accent); }
+    .plate-choice-item.selected .plate-radio::after {
+      content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+    }
+    .plate-choice-name { font-size: .87rem; font-weight: 600; color: var(--text); }
+
+    /* ══════════════════════════════════════
        PAGINA GIORNATE (lista)
     ══════════════════════════════════════ */
     .days-main {
@@ -830,6 +870,15 @@
       padding: 10px 0 8px;
       border-bottom: 1px solid var(--border);
       margin-bottom: 6px;
+    }
+    .day-detail-plate-tag {
+      margin-left: auto;
+      font-size: .63rem; font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid var(--accent-mid);
+      padding: 2px 9px; border-radius: 50px;
+      white-space: nowrap;
     }
     .day-detail-meal-title {
       font-size: .72rem; font-weight: 700;
